@@ -33,6 +33,9 @@ export function SiteHeader({ user }: SiteHeaderProps) {
 
       {user ? (
         <div className="site-header__account">
+          <Link className="header-link" to="/profile">
+            Profile
+          </Link>
           <span className="account-label">
             <span className="status-dot" aria-hidden="true" />
             <span>{user.name || user.email}</span>

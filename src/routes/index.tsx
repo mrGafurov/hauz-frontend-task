@@ -1,8 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link, useLoaderData } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({ component: Home })
 
 function Home() {
+  const user = useLoaderData({ from: '__root__' })
+
   return (
     <main className="landing-page">
       <section className="hero-panel">
@@ -14,10 +16,18 @@ function Home() {
             to the homes you care about.
           </p>
           <div className="hero-actions">
-            <a className="button button--primary" href="/sign-in">
-              Sign in
-            </a>
-            <span className="hero-caption">Use your email to continue</span>
+            {user ? (
+              <Link className="button button--primary" to="/profile">
+                Open profile
+              </Link>
+            ) : (
+              <Link className="button button--primary" to="/sign-in">
+                Sign in
+              </Link>
+            )}
+            <span className="hero-caption">
+              {user ? 'You are signed in' : 'Use your email to continue'}
+            </span>
           </div>
         </div>
       </section>
