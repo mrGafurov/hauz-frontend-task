@@ -12,6 +12,26 @@ body {
   max-width: 44rem;
 }
 
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.site-header__brand {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.site-header__account {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 h1 {
   font-size: 1.5rem;
 }
