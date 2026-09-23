@@ -7,6 +7,7 @@ import {
   completeEmailLogin,
   requestEmailCode,
 } from '../features/auth/auth.functions'
+import { getPersonalAccount } from '../features/personal-account/personal-account.functions'
 import { getSafeRedirect } from '../features/auth/redirect'
 
 const searchSchema = z.object({
@@ -29,6 +30,7 @@ function SignInPage() {
   const { redirect } = Route.useSearch()
   const requestCode = useServerFn(requestEmailCode)
   const completeLogin = useServerFn(completeEmailLogin)
+  const loadPersonalAccount = useServerFn(getPersonalAccount)
   const [email, setEmail] = useState('')
   const [secret, setSecret] = useState('')
   const [step, setStep] = useState<'email' | 'code'>('email')
@@ -57,8 +59,14 @@ function SignInPage() {
 
     try {
       await completeLogin({ data: { secret } })
+      const personalAccount = await loadPersonalAccount()
       await router.invalidate()
-      window.location.assign(getSafeRedirect(redirect))
+
+      const destination = personalAccount
+        ? getSafeRedirect(redirect)
+        : `/onboarding?redirect=${encodeURIComponent(getSafeRedirect(redirect))}`
+
+      window.location.assign(destination)
     } catch (submissionError) {
       setError(getErrorMessage(submissionError))
     } finally {

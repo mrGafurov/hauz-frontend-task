@@ -1,4 +1,4 @@
-import { Account, Client } from 'node-appwrite'
+import { Account, Client, Functions } from 'node-appwrite'
 
 function getRequiredEnv(name: string): string {
   const value = process.env[name]
@@ -18,6 +18,10 @@ function createClient(): Client {
 
 export function createSessionAccount(sessionSecret: string): Account {
   return new Account(createClient().setSession(sessionSecret))
+}
+
+export function createSessionFunctions(sessionSecret: string): Functions {
+  return new Functions(createClient().setSession(sessionSecret))
 }
 
 export function createAdminAccount(): Account {
