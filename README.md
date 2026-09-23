@@ -126,3 +126,33 @@ it if you need to, but say why in `NOTES.md`.
 Appwrite Cloud sends the sign-in codes from its own mail server on the free
 plan. Check your spam folder. If nothing arrives after a few minutes, Cloud may
 be rate limiting you, so wait and retry rather than clicking send repeatedly.
+
+## Implemented flow
+
+The app uses TanStack Start server functions for all Appwrite calls that need
+the API key or the Appwrite session secret. The session secret is stored in an
+HttpOnly cookie and is never included in the browser bundle.
+
+The user flow is:
+
+1. `/sign-in` sends an email code and verifies it.
+2. A new user goes to `/onboarding` and creates a Personal Account.
+3. An existing user goes to the requested redirect page.
+4. `/profile` reads and updates Personal Account data through the deployed
+   `personal-account` Function.
+
+## Verification
+
+```bash
+npm test
+npm run typecheck
+npm run build
+```
+
+For a manual check, use a fresh email address and verify sign-in, onboarding,
+hard refresh, logout, `/profile`, redirect back to `/profile`, clearing bio or
+contact email, and double-clicking the onboarding button.
+
+The implementation was developed in separate feature branches. The branch
+history is intentionally not squashed so the decisions can be reviewed one
+slice at a time.
