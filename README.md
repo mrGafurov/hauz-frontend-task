@@ -1,7 +1,8 @@
-# HAUZ frontend take-home starter
+# HAUZ frontend take-home
 
-A blank TanStack Start app plus the Appwrite Function you will call from it.
-Read `TASK.md` for what to build. This file is only about getting it running.
+This repository contains the HAUZ sign-in flow built with TanStack Start and
+Appwrite. Read `TASK.md` for the original brief and use this file to run the
+project locally.
 
 ## What you need
 
@@ -81,10 +82,11 @@ http://localhost:3000
 ## What is in here
 
 ```
-src/                          the app you are building; it is empty on purpose
-  router.tsx                  router setup
-  routes/__root.tsx           the document shell
-  routes/index.tsx            placeholder home page
+src/                          the implemented TanStack Start application
+  components/site-header.tsx  server-rendered auth-aware header
+  features/                   auth and Personal Account server functions
+  routes/                      home, sign-in, onboarding and profile pages
+  server/                      Appwrite clients and HttpOnly session cookies
 functions/personal-account/   the Function, already written
 appwrite.config.json          database, table and Function definitions
 ```

@@ -8,6 +8,7 @@ import {
 
 import { SiteHeader } from '../components/site-header'
 import { getCurrentUser } from '../features/auth/auth.functions'
+import { getPersonalAccount } from '../features/personal-account/personal-account.functions'
 import appCss from '../styles.css?url'
 
 export interface RouterContext {
@@ -23,7 +24,17 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
     links: [{ rel: 'stylesheet', href: appCss }],
   }),
-  loader: () => getCurrentUser(),
+  loader: async () => {
+    const user = await getCurrentUser()
+
+    if (!user) {
+      return null
+    }
+
+    const personalAccount = await getPersonalAccount()
+
+    return personalAccount ? { ...user, name: personalAccount.firstName } : user
+  },
   errorComponent: RootError,
   shellComponent: RootDocument,
 })
