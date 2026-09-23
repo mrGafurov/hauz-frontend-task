@@ -29,6 +29,17 @@ const createAccountInput = z.object({
   role: roleSchema,
 })
 
+const updateAccountInput = z
+  .object({
+    firstName: z.string().trim().min(1).max(100).optional(),
+    lastName: z.string().trim().min(1).max(100).optional(),
+    contactEmail: z.string().trim().email().nullable().optional(),
+    bio: z.string().trim().max(2000).nullable().optional(),
+  })
+  .refine((value) => Object.keys(value).length > 0, {
+    message: 'At least one profile field is required.',
+  })
+
 type PersonalAccount = z.infer<typeof personalAccountSchema>
 
 interface FunctionRequest {
@@ -122,6 +133,21 @@ export const createPersonalAccount = createServerFn({ method: 'POST' })
 
     if (!result.data) {
       throw new Error('Could not create the personal account.')
+    }
+
+    return result.data
+  })
+
+export const updatePersonalAccount = createServerFn({ method: 'POST' })
+  .validator(updateAccountInput)
+  .handler(async ({ data }): Promise<PersonalAccount> => {
+    const result = await executePersonalAccount(
+      { method: ExecutionMethod.PATCH, body: data },
+      personalAccountSchema,
+    )
+
+    if (!result.data) {
+      throw new Error('Could not update the personal account.')
     }
 
     return result.data
