@@ -1,11 +1,30 @@
 import { createFileRoute, Link, redirect, useRouter } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useServerFn } from '@tanstack/react-start'
 
 import {
   getPersonalAccount,
   updatePersonalAccount,
 } from '../features/personal-account/personal-account.functions'
+
+interface ProfileFieldProps {
+  children: ReactNode
+  id: string
+  label: string
+  optional?: boolean
+}
+
+function ProfileField({ children, id, label, optional = false }: ProfileFieldProps) {
+  return (
+    <div className="profile-field">
+      <label htmlFor={id}>
+        {label}
+        {optional ? <span className="optional">Optional</span> : null}
+      </label>
+      {children}
+    </div>
+  )
+}
 
 export const Route = createFileRoute('/profile')({
   loader: async () => {
@@ -92,44 +111,44 @@ function ProfilePage() {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="field-row">
-            <label>
-              First name
+            <ProfileField id="first-name" label="First name">
               <input
+                id="first-name"
                 value={firstName}
                 onChange={(event) => setFirstName(event.target.value)}
                 autoComplete="given-name"
                 required
               />
-            </label>
-            <label>
-              Last name
+            </ProfileField>
+            <ProfileField id="last-name" label="Last name">
               <input
+                id="last-name"
                 value={lastName}
                 onChange={(event) => setLastName(event.target.value)}
                 autoComplete="family-name"
                 required
               />
-            </label>
+            </ProfileField>
           </div>
-          <label>
-            Contact email <span className="optional">Optional</span>
+          <ProfileField id="contact-email" label="Contact email" optional>
             <input
+              id="contact-email"
               type="email"
               value={contactEmail}
               onChange={(event) => setContactEmail(event.target.value)}
               autoComplete="email"
               placeholder="you@example.com"
             />
-          </label>
-          <label>
-            Bio <span className="optional">Optional</span>
+          </ProfileField>
+          <ProfileField id="bio" label="Bio" optional>
             <textarea
+              id="bio"
               value={bio}
               onChange={(event) => setBio(event.target.value)}
               placeholder="A line or two about what you’re looking for..."
               rows={5}
             />
-          </label>
+          </ProfileField>
           <button className="button button--primary" type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Saving...' : 'Save changes'}
           </button>

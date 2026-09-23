@@ -358,6 +358,18 @@ textarea:focus-visible {
   gap: 16px;
 }
 
+.profile-field {
+  margin-top: 18px;
+}
+
+.field-row > .profile-field {
+  margin-top: 0;
+}
+
+.profile-field label {
+  margin-top: 0;
+}
+
 .optional {
   color: var(--muted);
   font-size: 0.75rem;
