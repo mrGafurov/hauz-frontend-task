@@ -306,6 +306,10 @@ textarea:focus-visible {
   margin-top: 26px;
 }
 
+.profile-card form > .button {
+  margin-top: 26px;
+}
+
 .form-lead {
   margin-bottom: 18px;
   color: var(--muted);
@@ -371,6 +375,7 @@ textarea:focus-visible {
 }
 
 .optional {
+  margin-left: 5px;
   color: var(--muted);
   font-size: 0.75rem;
   font-weight: 400;
