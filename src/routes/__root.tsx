@@ -1,6 +1,7 @@
 import type { QueryClient } from '@tanstack/react-query'
 import {
   HeadContent,
+  Link,
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
@@ -23,8 +24,22 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     links: [{ rel: 'stylesheet', href: appCss }],
   }),
   loader: () => getCurrentUser(),
+  errorComponent: RootError,
   shellComponent: RootDocument,
 })
+
+function RootError() {
+  return (
+    <main>
+      <h1>Something went wrong</h1>
+      <p>We could not load this page. Please try again or sign in again.</p>
+      <p>
+        <Link to="/">Try again</Link>{' '}
+        <Link to="/sign-in">Sign in</Link>
+      </p>
+    </main>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const user = Route.useLoaderData()

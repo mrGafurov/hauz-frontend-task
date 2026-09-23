@@ -90,7 +90,10 @@ async function executePersonalAccount<T>(
     },
   )
 
-  if (execution.responseStatusCode >= 400 && execution.responseStatusCode !== 404) {
+  if (
+    execution.status !== 'completed' ||
+    (execution.responseStatusCode >= 400 && execution.responseStatusCode !== 404)
+  ) {
     if (execution.responseStatusCode === 401) {
       clearSessionSecret()
     }
