@@ -125,8 +125,12 @@ function SignInPage() {
                 className="code-input"
                 inputMode="numeric"
                 value={secret}
-                onChange={(event) => setSecret(event.target.value)}
+                onChange={(event) =>
+                  setSecret(event.target.value.replace(/\D/g, ''))
+                }
                 autoComplete="one-time-code"
+                maxLength={6}
+                pattern="[0-9]{6}"
                 placeholder="000000"
                 required
                 autoFocus
