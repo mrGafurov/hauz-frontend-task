@@ -19,3 +19,9 @@ function createClient(): Client {
 export function createSessionAccount(sessionSecret: string): Account {
   return new Account(createClient().setSession(sessionSecret))
 }
+
+export function createAdminAccount(): Account {
+  return new Account(
+    createClient().setKey(getRequiredEnv('APPWRITE_API_KEY')),
+  )
+}
