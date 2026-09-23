@@ -71,52 +71,73 @@ function ProfilePage() {
   }
 
   return (
-    <main>
-      <p>
-        <Link to="/">Back to home</Link>
-      </p>
-      <h1>Profile</h1>
-      <p>Role: {account.role === 'realtor' ? 'Realtor' : 'Property Owner'}</p>
+    <main className="page-shell profile-page">
+      <div className="profile-heading">
+        <div>
+          <Link className="back-link" to="/">
+            <span aria-hidden="true">←</span> Back to home
+          </Link>
+          <h1>Your profile</h1>
+        </div>
+        <div className="profile-badge">
+          <span className="status-dot" aria-hidden="true" />
+          <span>{account.role === 'realtor' ? 'Realtor' : 'Property Owner'}</span>
+        </div>
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          First name
-          <input
-            value={firstName}
-            onChange={(event) => setFirstName(event.target.value)}
-            autoComplete="given-name"
-            required
-          />
-        </label>
-        <label>
-          Last name
-          <input
-            value={lastName}
-            onChange={(event) => setLastName(event.target.value)}
-            autoComplete="family-name"
-            required
-          />
-        </label>
-        <label>
-          Contact email
-          <input
-            type="email"
-            value={contactEmail}
-            onChange={(event) => setContactEmail(event.target.value)}
-            autoComplete="email"
-          />
-        </label>
-        <label>
-          Bio
-          <textarea value={bio} onChange={(event) => setBio(event.target.value)} />
-        </label>
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Saving...' : 'Save changes'}
-        </button>
-      </form>
+      <section className="form-card profile-card">
+        <div className="form-card__top">
+          <span className="form-step">Personal details</span>
+          <span className="form-note">Last updated when you save</span>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="field-row">
+            <label>
+              First name
+              <input
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+                autoComplete="given-name"
+                required
+              />
+            </label>
+            <label>
+              Last name
+              <input
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
+                autoComplete="family-name"
+                required
+              />
+            </label>
+          </div>
+          <label>
+            Contact email <span className="optional">Optional</span>
+            <input
+              type="email"
+              value={contactEmail}
+              onChange={(event) => setContactEmail(event.target.value)}
+              autoComplete="email"
+              placeholder="you@example.com"
+            />
+          </label>
+          <label>
+            Bio <span className="optional">Optional</span>
+            <textarea
+              value={bio}
+              onChange={(event) => setBio(event.target.value)}
+              placeholder="A line or two about what you’re looking for..."
+              rows={5}
+            />
+          </label>
+          <button className="button button--primary" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Saving...' : 'Save changes'}
+          </button>
+        </form>
 
-      {saved ? <p role="status">Profile saved.</p> : null}
-      {error ? <p role="alert">{error}</p> : null}
+        {saved ? <p className="form-success" role="status">Profile saved.</p> : null}
+        {error ? <p className="form-error" role="alert">{error}</p> : null}
+      </section>
     </main>
   )
 }

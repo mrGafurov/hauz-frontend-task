@@ -33,13 +33,23 @@ export function SiteHeader({ user }: SiteHeaderProps) {
 
       {user ? (
         <div className="site-header__account">
-          <span>{user.name || user.email}</span>
-          <button type="button" onClick={handleLogout} disabled={isLoggingOut}>
+          <span className="account-label">
+            <span className="status-dot" aria-hidden="true" />
+            <span>{user.name || user.email}</span>
+          </span>
+          <button
+            className="button button--quiet"
+            type="button"
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+          >
             {isLoggingOut ? 'Logging out...' : 'Log out'}
           </button>
         </div>
       ) : (
-        <a href="/sign-in">Sign in</a>
+        <a className="header-link" href="/sign-in">
+          Sign in
+        </a>
       )}
     </header>
   )

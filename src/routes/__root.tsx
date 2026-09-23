@@ -50,8 +50,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <SiteHeader user={user} />
-        {children}
+        <div className="app-frame">
+          <SiteHeader user={user} />
+          {children}
+        </div>
         <Scripts />
       </body>
     </html>

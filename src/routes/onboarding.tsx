@@ -48,48 +48,62 @@ function OnboardingPage() {
   }
 
   return (
-    <main>
-      <p>
-        <Link to="/">Back to home</Link>
-      </p>
-      <h1>Tell us about yourself</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          First name
-          <input
-            value={firstName}
-            onChange={(event) => setFirstName(event.target.value)}
-            autoComplete="given-name"
-            required
-            autoFocus
-          />
-        </label>
-        <label>
-          Last name
-          <input
-            value={lastName}
-            onChange={(event) => setLastName(event.target.value)}
-            autoComplete="family-name"
-            required
-          />
-        </label>
-        <label>
-          Role
-          <select
-            value={role}
-            onChange={(event) =>
-              setRole(event.target.value as 'property_owner' | 'realtor')
-            }
-          >
-            <option value="property_owner">Property Owner</option>
-            <option value="realtor">Realtor</option>
-          </select>
-        </label>
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Creating...' : 'Continue'}
-        </button>
-      </form>
-      {error ? <p role="alert">{error}</p> : null}
+    <main className="page-shell auth-page">
+      <div className="page-intro">
+        <Link className="back-link" to="/">
+          <span aria-hidden="true">←</span> Back to home
+        </Link>
+        <h1>Set up your account</h1>
+        <p>Add a few details so we can create your HAUZ profile.</p>
+      </div>
+
+      <section className="form-card">
+        <div className="form-card__top">
+          <span className="form-step">02 / 02</span>
+          <span className="form-note">You can edit your name later</span>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="field-row">
+            <label>
+              First name
+              <input
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+                autoComplete="given-name"
+                placeholder="Aziza"
+                required
+                autoFocus
+              />
+            </label>
+            <label>
+              Last name
+              <input
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
+                autoComplete="family-name"
+                placeholder="Karimova"
+                required
+              />
+            </label>
+          </div>
+          <label>
+            I’m here as a...
+            <select
+              value={role}
+              onChange={(event) =>
+                setRole(event.target.value as 'property_owner' | 'realtor')
+              }
+            >
+              <option value="property_owner">Property Owner</option>
+              <option value="realtor">Realtor</option>
+            </select>
+          </label>
+          <button className="button button--primary button--full" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Creating...' : 'Continue'}
+          </button>
+        </form>
+        {error ? <p className="form-error" role="alert">{error}</p> : null}
+      </section>
     </main>
   )
 }

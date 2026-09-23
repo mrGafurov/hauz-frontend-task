@@ -81,53 +81,68 @@ function SignInPage() {
   }
 
   return (
-    <main>
-      <p>
-        <Link to="/">Back to home</Link>
-      </p>
-      <h1>Sign in</h1>
+    <main className="page-shell auth-page">
+      <div className="page-intro">
+        <Link className="back-link" to="/">
+          <span aria-hidden="true">←</span> Back to home
+        </Link>
+        <h1>Sign in</h1>
+        <p>Enter your email to receive a one-time sign-in code.</p>
+      </div>
 
-      {step === 'email' ? (
-        <form onSubmit={handleEmailSubmit}>
-          <label>
-            Email
-            <input
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              autoComplete="email"
-              required
-              autoFocus
-            />
-          </label>
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Sending...' : 'Send code'}
-          </button>
-        </form>
-      ) : (
-        <form onSubmit={handleCodeSubmit}>
-          <p>Enter the code sent to {email}.</p>
-          <label>
-            Code
-            <input
-              inputMode="numeric"
-              value={secret}
-              onChange={(event) => setSecret(event.target.value)}
-              autoComplete="one-time-code"
-              required
-              autoFocus
-            />
-          </label>
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Checking...' : 'Continue'}
-          </button>
-          <button type="button" onClick={startOver} disabled={isSubmitting}>
-            Use another email
-          </button>
-        </form>
-      )}
+      <section className="form-card">
+        <div className="form-card__top">
+          <span className="form-step">{step === 'email' ? '01' : '02'} / 02</span>
+          <span className="form-note">No password to remember</span>
+        </div>
 
-      {error ? <p role="alert">{error}</p> : null}
+        {step === 'email' ? (
+          <form onSubmit={handleEmailSubmit}>
+            <label>
+              Email address
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                autoComplete="email"
+                placeholder="you@example.com"
+                required
+                autoFocus
+              />
+            </label>
+            <button className="button button--primary button--full" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : 'Send code'}
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleCodeSubmit}>
+            <p className="form-lead">
+              Enter the code sent to <strong>{email}</strong>.
+            </p>
+            <label>
+              One-time code
+              <input
+                className="code-input"
+                inputMode="numeric"
+                value={secret}
+                onChange={(event) => setSecret(event.target.value)}
+                autoComplete="one-time-code"
+                placeholder="000000"
+                required
+                autoFocus
+              />
+            </label>
+            <button className="button button--primary button--full" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Checking...' : 'Continue'}
+            </button>
+            <button className="text-button" type="button" onClick={startOver} disabled={isSubmitting}>
+              Use another email
+            </button>
+          </form>
+        )}
+
+        {error ? <p className="form-error" role="alert">{error}</p> : null}
+      </section>
     </main>
   )
 }
